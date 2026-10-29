@@ -1,13 +1,13 @@
-# DeepAstroBio
+# Astrobio Paper Scan · DeepAstroBio
 
 *Towards Deeper Integration of Biology for the Next-Generation of Astrobiology Research*
 
-**Live site: https://deepastrobio.github.io/**
+**Live site: https://deepastrobio.github.io/astrobio-paper-scan/**
 
 DeepAstroBio is an open platform for finding and connecting the biology literature that matters to
-astrobiology. Its first tool is **Citation Scan**.
+astrobiology. Its first tool is **Astrobio Paper Scan**.
 
-## Citation Scan
+## What it does
 
 How often do the biology papers cited by the *International Journal of Astrobiology* (IJA) actually
 use the word "astrobiology"? Pick a date range, and the page lists the IJA papers published in it,
