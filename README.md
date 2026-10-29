@@ -1,7 +1,5 @@
 # Astrobio Paper Scan · DeepAstroBio
 
-*Towards Deeper Integration of Biology for the Next-Generation of Astrobiology Research*
-
 **Live site: https://deepastrobio.github.io/astrobio-paper-scan/**
 
 DeepAstroBio is an open platform for finding and connecting the biology literature that matters to
