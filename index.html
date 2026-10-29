@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astrobiology Citation Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Academic-homepage layout in a purple theme: lavender page, white cards with a purple top band. */
+:root {
+  color-scheme: light;
+  --page: #eeebfb; --bg: #ffffff; --raised: #ffffff; --soft: #f7f6fd;
+  --ink: #1f1d29; --text: #34323f; --muted: #5f5c70; --faint: #8a879c;
+  --rule: #e6e3f2; --line: #d6d2e8; --field: #c9c4de;
+  --link: #4b3bc4; --link-hover: #33269a;
+  --btn: #5b47e0; --btn-hover: #4836c4;
+  --notice-bg: #f1eefe; --notice-ink: #4b3bc4;
+  --accent: #5b47e0; --accent-wash: rgba(91,71,224,0.08);
+  --s-strong: #5b47e0; --s-near: #a294f0; --s-stage: #8a879f; --s-g2: #a9a6bc; --s-g3: #c6c4d4;
+  --s-none: #b9b6c9; --s-noabs: #e4e2ee; --s-other: #f0eff6;
+  --err: #c0392b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  --page: #14121c; --bg: #1f1d2a; --raised: #282636; --soft: #262433;
+  --ink: #ecebf3; --text: #cfcde0; --muted: #9a97ab; --faint: #77748a;
+  --rule: #2c2a3a; --line: #363447; --field: #474459;
+  --link: #a99df5; --link-hover: #cbc3fa;
+  --btn: #6f5ef0; --btn-hover: #8476f3;
+  --notice-bg: #2a2546; --notice-ink: #b7acf7;
+  --accent: #8b7cf0; --accent-wash: rgba(139,124,240,0.14);
+  --s-strong: #8b7cf0; --s-near: #5a4bb8; --s-stage: #7a778d; --s-g2: #625f75; --s-g3: #4d4b5e;
+  --s-none: #5c5a6e; --s-noabs: #3a3849; --s-other: #2a2837;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #14121c; --bg: #1f1d2a; --raised: #282636; --soft: #262433;
+  --ink: #ecebf3; --text: #cfcde0; --muted: #9a97ab; --faint: #77748a;
+  --rule: #2c2a3a; --line: #363447; --field: #474459;
+  --link: #a99df5; --link-hover: #cbc3fa;
+  --btn: #6f5ef0; --btn-hover: #8476f3;
+  --notice-bg: #2a2546; --notice-ink: #b7acf7;
+  --accent: #8b7cf0; --accent-wash: rgba(139,124,240,0.14);
+  --s-strong: #8b7cf0; --s-near: #5a4bb8; --s-stage: #7a778d; --s-g2: #625f75; --s-g3: #4d4b5e;
+  --s-none: #5c5a6e; --s-noabs: #3a3849; --s-other: #2a2837;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body { margin: 0; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; background: var(--page); color: var(--text); font: 14.5px/1.5 "Fira Sans", -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--link-hover); }
+button, input, select, textarea { font: inherit; color: inherit; }
+b, strong { color: var(--ink); font-weight: 600; }
+
+/* masthead */
+.masthead { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.masthead .site::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; vertical-align: 2px; }
+.masthead nav { max-width: 1320px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; gap: 36px; }
+.masthead .site { font-weight: 600; font-size: 1.1em; color: var(--text); text-decoration: none; white-space: nowrap; }
+.masthead .links { display: flex; gap: 40px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.masthead .links a { color: var(--muted); text-decoration: none; font-size: 1em; white-space: nowrap; }
+.masthead .links a:hover { color: var(--accent); }
+@media (max-width: 900px) { .masthead nav { padding: 16px; gap: 24px; } .masthead .links { gap: 22px; } }
+
+/* layout */
+.layout { max-width: 1320px; margin: 0 auto; padding: 24px 32px 64px; display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); padding: 24px 16px 60px; gap: 32px; } }
+
+/* sidebar */
+.card, aside, section.block, #status { background: var(--bg); border-radius: 14px; border-top: 10px solid var(--accent); box-shadow: 0 1px 2px rgba(40,30,90,.05); }
+aside { position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow: auto; padding: 18px 18px 22px; font-size: 13.5px; }
+@media (max-width: 960px) { aside { position: static; max-height: none; } }
+aside h3 { font-size: 1.35em; font-weight: 500; color: var(--ink); margin: 0 0 4px; }
+aside .tagline { color: var(--muted); margin: 0 0 16px; line-height: 1.5; }
+.field { margin-bottom: 20px; }
+.lbl { display: block; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.help { color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.45; }
+input[type=date], input[type=text], input[type=password], textarea, select {
+  width: 100%; padding: 6px 9px; border: 1px solid var(--field); border-radius: 4px; background: var(--raised); outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--link); }
+textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; resize: vertical; }
+.daterow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: center; color: var(--muted); }
+.daterow input { min-width: 0; font-size: 13px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; }
+.chip { border: none; background: none; padding: 0; color: var(--link); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; font-size: 13px; }
+.chip.on { color: var(--ink); font-weight: 600; text-decoration: none; }
+.checks label { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 4px 0; line-height: 1.4; }
+.checks input { margin-top: 3px; accent-color: var(--btn); }
+.range { display: flex; align-items: center; gap: 10px; }
+.range input { flex: 1; accent-color: var(--btn); }
+.range output { width: 40px; text-align: right; font-weight: 600; color: var(--ink); }
+details > summary { cursor: pointer; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.run { width: 100%; padding: 10px; border: none; border-radius: 8px; background: var(--btn); color: #fff; font-weight: 600; cursor: pointer; letter-spacing: .01em; }
+.run:hover { background: var(--btn-hover); }
+.run:disabled { opacity: .55; cursor: default; }
+.run.ghost { margin-top: 8px; background: none; color: var(--link); box-shadow: inset 0 0 0 1px var(--field); }
+.run.ghost:hover:not(:disabled) { background: var(--accent-wash); }
+body.snapshot .live-only { display: none; }
+hr { border: none; border-top: 1px solid var(--rule); margin: 22px 0; }
+
+/* content */
+main { min-width: 0; }
+#status { display: none; margin-bottom: 22px; padding: 18px 26px; }
+.bar { height: 2px; background: var(--rule); overflow: hidden; margin-bottom: 10px; }
+.bar > div { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.log { font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); white-space: pre-wrap; max-height: 140px; overflow: auto; }
+.err { color: var(--err); }
+#results { transition: opacity .2s; }
+#results.loading { opacity: .45; pointer-events: none; }
+.intro { margin: 0 0 18px; }
+
+.notice { background: var(--notice-bg); border-left: 4px solid var(--accent); border-radius: 8px; padding: 14px 18px; margin: 0 0 8px; display: flex; gap: 18px; align-items: center; }
+.notice .big { font-size: 36px; font-weight: 600; line-height: 1; color: var(--notice-ink); }
+.notice .what { color: var(--notice-ink); font-weight: 600; font-size: 1.05em; }
+.notice .meta { color: var(--text); font-size: 13.5px; margin-top: 2px; }
+@media (max-width: 640px) { .notice { flex-direction: column; align-items: flex-start; gap: 8px; } }
+
+section.block { margin-top: 18px; padding: 18px 22px 22px; }
+@media (max-width: 640px) { section.block { padding: 18px 16px 22px; } }
+section.block h2 { font-size: 1.25em; font-weight: 600; color: var(--ink); margin: 0 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+section.block .cap { margin: 0 0 18px; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px; }
+@media (max-width: 1100px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+h4 { font-size: 1em; font-weight: 600; color: var(--ink); margin: 20px 0 4px; }
+
+/* charts */
+.legend { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: -4px 0 12px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 2px; flex: none; display: inline-block; }
+.bars { display: grid; grid-template-columns: minmax(90px, max-content) minmax(0, 1fr); gap: 6px 12px; align-items: center; font-size: 13.5px; }
+.bars.long { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); }
+@media (max-width: 640px) { .bars.long { grid-template-columns: minmax(0, 1fr); gap: 2px 0; } .bars.long .track { margin-bottom: 8px; } }
+.bars .name { color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track { display: flex; align-items: center; min-width: 0; height: 22px; }
+.stack { display: flex; gap: 2px; height: 16px; min-width: 0; }
+.seg { height: 100%; min-width: 2px; outline: none; }
+.seg:last-child { border-radius: 0 4px 4px 0; }
+.seg:hover, .seg:focus-visible { filter: brightness(1.08); box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--muted); }
+.val { font-size: 12px; color: var(--muted); margin-left: 8px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.val b { color: var(--ink); }
+.hbar100 { height: 24px; display: flex; gap: 2px; }
+.hbar100 .seg:first-child { border-radius: 4px 0 0 4px; }
+.hbar100 .seg:last-child { border-radius: 0 4px 4px 0; }
+.outcomes { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 14px; }
+.outcomes div { font-size: 13px; color: var(--muted); }
+.outcomes b { display: block; font-size: 20px; font-weight: 500; }
+.outcomes .sw { margin-right: 6px; }
+.note { color: var(--muted); font-size: 13px; margin-top: 14px; }
+
+.donut-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: center; }
+@media (max-width: 640px) { .donut-wrap { grid-template-columns: minmax(0, 1fr); justify-items: center; } }
+.donut { position: relative; width: 220px; height: 220px; flex: none; }
+.donut svg { display: block; overflow: visible; }
+.donut path { outline: none; transition: transform .15s; transform-origin: 110px 110px; }
+.donut path:hover, .donut path:focus-visible { transform: scale(1.03); }
+.donut .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+.donut .center b { font-size: 28px; font-weight: 600; line-height: 1.1; }
+.donut .center span { font-size: 12px; color: var(--muted); max-width: 120px; line-height: 1.3; }
+.dlegend { max-width: 560px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 12px; align-items: center; font-size: 13.5px; width: 100%; }
+.dlegend .lab { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dlegend .num { font-weight: 600; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.dlegend .pc { color: var(--muted); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; min-width: 34px; }
+#tip { position: fixed; z-index: 10; pointer-events: none; background: var(--raised); border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  border-radius: 4px; padding: 8px 10px; font-size: 13px; max-width: 340px; display: none; }
+#tip .t { font-weight: 600; margin-bottom: 4px; color: var(--ink); }
+#tip .r { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+#tip .r b { min-width: 28px; text-align: right; font-variant-numeric: tabular-nums; }
+#tip .key { width: 10px; height: 2px; border-radius: 1px; flex: none; }
+
+/* tables */
+.tabs { display: flex; gap: 28px; margin: 0 0 16px; flex-wrap: wrap; }
+.tabs button { border: none; background: none; padding: 0 0 4px; color: var(--link); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.tabs button.on { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--ink); }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; font-size: 13.5px; }
+.toolbar input[type=text] { max-width: 300px; }
+.toolbar select { width: auto; }
+.toolbar .count { color: var(--muted); font-size: 13px; }
+.toolbar .spacer { flex: 1; }
+.btn { border: none; border-radius: 6px; background: var(--btn); color: #fff; padding: 5px 12px; cursor: pointer; font-size: 13px; }
+.btn:hover { background: var(--btn-hover); }
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+thead th { border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; user-select: none; white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.item { cursor: pointer; } tr.item:hover td { background: var(--soft); }
+tr.detail td { background: var(--soft); }
+.tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; color: var(--muted); }
+.terms { font-size: 12px; }
+mark { color: var(--ink); border-radius: 3px; padding: 0 2px; background: color-mix(in srgb, var(--s-strong) 20%, transparent); }
+.abs { max-width: 880px; line-height: 1.55; margin: 8px 0; }
+.small { color: var(--muted); font-size: 12px; }
+.empty { color: var(--muted); padding: 48px 0; }
+footer { max-width: 1320px; margin: 0 auto; padding: 0 32px 32px; color: var(--muted); font-size: 13px; }
+
+/* ===== v2: pastel-panel illustration theme (dashed ink borders, slab headings) ===== */
+:root {
+  color-scheme: light;
+  --page: #f5f5f3; --bg: #ffffff; --raised: #ffffff; --soft: #fafaf8;
+  --ink: #1b1b1f; --text: #2e2e34; --muted: #5c5c66; --faint: #8b8b94;
+  --rule: rgba(20,20,30,.10); --line: rgba(20,20,30,.22); --field: rgba(20,20,30,.28);
+  --link: #1f5fae; --link-hover: #154785;
+  --btn: #d62839; --btn-hover: #b51f2f;
+  --notice-bg: #fbe3e5; --notice-ink: #b51f2f;
+  --accent: #d62839; --accent-wash: rgba(214,40,57,.08);
+  --s-strong: #d62839; --s-near: #f19aa3; --s-stage: #1f5fae; --s-g2: #7fa6d6; --s-g3: #b9cde8;
+  --s-none: #a9a9b2; --s-noabs: #d9d9de; --s-other: #ececef;
+  --dash: #1b1b1f;
+  --p1: #e7e5f6; --p2: #dfe6f1; --p3: #f4e4d9; --p4: #f7eed2; --p5: #e0ebda;
+  --err: #c0392b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #121214; --bg: #1c1c20; --raised: #26262b; --soft: #222226;
+    --ink: #f1f1f3; --text: #d6d6dc; --muted: #a0a0aa; --faint: #74747e;
+    --rule: rgba(255,255,255,.08); --line: rgba(255,255,255,.18); --field: rgba(255,255,255,.24);
+    --link: #7fb0ec; --link-hover: #a9caf3;
+    --btn: #e2404f; --btn-hover: #ee5a68;
+    --notice-bg: #3a1c21; --notice-ink: #f39aa3;
+    --accent: #ef5361; --accent-wash: rgba(239,83,97,.14);
+    --s-strong: #ef5361; --s-near: #8e3a44; --s-stage: #5b93d6; --s-g2: #3d5f8a; --s-g3: #2f4258;
+    --s-none: #5c5c66; --s-noabs: #3a3a42; --s-other: #2a2a30;
+    --dash: #8a8a94;
+    --p1: #23222e; --p2: #1f242d; --p3: #2c241f; --p4: #2b2819; --p5: #1f2a1e;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #121214; --bg: #1c1c20; --raised: #26262b; --soft: #222226;
+  --ink: #f1f1f3; --text: #d6d6dc; --muted: #a0a0aa; --faint: #74747e;
+  --rule: rgba(255,255,255,.08); --line: rgba(255,255,255,.18); --field: rgba(255,255,255,.24);
+  --link: #7fb0ec; --link-hover: #a9caf3;
+  --btn: #e2404f; --btn-hover: #ee5a68;
+  --notice-bg: #3a1c21; --notice-ink: #f39aa3;
+  --accent: #ef5361; --accent-wash: rgba(239,83,97,.14);
+  --s-strong: #ef5361; --s-near: #8e3a44; --s-stage: #5b93d6; --s-g2: #3d5f8a; --s-g3: #2f4258;
+  --s-none: #5c5c66; --s-noabs: #3a3a42; --s-other: #2a2a30;
+  --dash: #8a8a94;
+  --p1: #23222e; --p2: #1f242d; --p3: #2c241f; --p4: #2b2819; --p5: #1f2a1e;
+}
+body { font: 13.5px/1.5 "Inter", -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+h2, h3, h4, .masthead .site, .notice .big, .outcomes b, .donut .center b, .lbl, details > summary {
+  font-family: "Roboto Slab", Georgia, serif;
+}
+.masthead { background: var(--bg); border-bottom: 1.5px dashed var(--dash); }
+.masthead .site { font-weight: 700; font-size: 1.05em; color: var(--ink); }
+.masthead .site::before { border-radius: 3px; }
+.masthead .links a { font-size: .95em; }
+.masthead .links a:hover { color: var(--accent); }
+
+.card, aside, section.block, #status {
+  border-top: none; border: 1.5px dashed var(--dash); border-radius: 12px; box-shadow: none;
+}
+aside { background: var(--p1); font-size: 12.5px; }
+#status { background: var(--bg); }
+#results > section.block:nth-of-type(5n+1) { background: var(--p2); }
+#results > section.block:nth-of-type(5n+2) { background: var(--p3); }
+#results > section.block:nth-of-type(5n+3) { background: var(--p5); }
+#results > section.block:nth-of-type(5n+4) { background: var(--p4); }
+#results > section.block:nth-of-type(5n+5) { background: var(--p1); }
+
+aside h3 { font-size: 1.3em; font-weight: 700; }
+section.block h2 { font-size: 1.15em; font-weight: 700; letter-spacing: -.005em; border-bottom: 1.5px dashed var(--line); }
+h4 { font-size: .95em; font-weight: 700; }
+.lbl { font-weight: 700; font-size: .95em; }
+
+input[type=date], input[type=text], input[type=password], textarea, select { border-radius: 6px; background: var(--raised); }
+.run { border-radius: 999px; font-weight: 600; }
+.run.ghost { background: var(--raised); }
+.btn { border-radius: 999px; }
+
+.notice { background: var(--bg); border: 1.5px dashed var(--accent); border-left: 1.5px dashed var(--accent); border-radius: 10px; }
+.notice .big { font-size: 32px; font-weight: 700; color: var(--accent); }
+.notice .what { color: var(--ink); }
+
+/* tables sit on a white sheet inside the pastel panels for legibility */
+table { background: var(--raised); border-radius: 8px; overflow: hidden; font-size: 13px; }
+thead th { background: var(--soft); color: var(--ink); font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; }
+tbody tr:hover td { background: var(--accent-wash); }
+.track { height: 18px; }
+.tabs button.on { border-bottom-color: var(--accent); }
+mark { background: color-mix(in srgb, var(--s-strong) 18%, transparent); }
+#tip { border: 1.5px dashed var(--dash); border-radius: 8px; font-size: 12px; }
+.layout { grid-template-columns: 300px minmax(0, 1fr); }
+@media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+.daterow input { font-size: 12px; padding: 6px 6px; }
+footer { font-size: 12px; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <nav>
+    <a class="site" href="#top">Astrobiology Citation Scan</a>
+    <div class="links">
+      <a href="#overview">Overview</a>
+      <a href="#sources">Reference Sources</a>
+      <a href="#abstracts">Abstracts</a>
+      <a href="#papers">IJA Papers</a>
+      <a href="#journals">Journals</a>
+      <a href="#explore">Data</a>
+    </div>
+  </nav>
+</header>
+
+<div class="layout" id="top">
+  <aside>
+    <h3>Settings</h3>
+    <p class="tagline">Choose which <i>International Journal of Astrobiology</i> papers to scan and how to judge their references.</p>
+
+    <div class="field">
+      <span class="lbl">IJA publication date <span class="help">(online)</span></span>
+      <div class="daterow"><input type="date" id="from" aria-label="From"><span>–</span><input type="date" id="to" aria-label="To"></div>
+      <div class="chips" id="presets"></div>
+    </div>
+
+    <div class="field">
+      <span class="lbl">Biology journal threshold</span>
+      <div class="range"><input type="range" id="thr" min="0.2" max="0.9" step="0.05" value="0.5"><output id="thrv"></output></div>
+      <div class="help">A journal counts as biology when at least this share of its OpenAlex topics belong to the fields below.</div>
+      <div class="checks" id="fields" style="margin-top:8px"></div>
+    </div>
+
+    <hr>
+    <div class="field">
+      <span class="lbl">Astrobiology terms <span class="help">one per line, * = wildcard</span></span>
+      <textarea id="terms" spellcheck="false" style="height:60px"></textarea>
+      <div class="help" style="margin-top:4px">An abstract counts as relevant only when it contains one of these. The default matches every form of the word: astrobiology, astrobiological, astrobiologist, astro-biology…</div>
+      <div class="checks" style="margin-top:6px"><label><input type="checkbox" id="intitle"> Also match titles</label></div>
+    </div>
+
+    <details class="field live-only">
+      <summary>API settings (optional)</summary>
+      <div class="field">
+        <span class="lbl">OpenAlex API key</span>
+        <input type="password" id="oakey" placeholder="openalex.org/settings/api" autocomplete="off">
+        <div class="help">Without a key, requests share a small daily quota.</div>
+      </div>
+      <span class="lbl">Crossref contact email</span>
+      <input type="text" id="mailto" placeholder="you@example.com">
+    </details>
+
+    <button class="run" id="run">Run analysis</button>
+    <button class="run ghost" id="export" disabled>Download as HTML</button>
+    <p class="help" id="snapnote" style="display:none;margin-top:14px"></p>
+  </aside>
+
+  <main>
+    <div id="status"><div class="bar"><div id="barfill"></div></div><div class="log" id="log"></div></div>
+    <div id="results">
+      <section class="block" id="overview" style="margin-top:0">
+        <h2>Overview</h2>
+        <p>This tool takes papers published in the <i>International Journal of Astrobiology</i> (IJA), collects every work they cite, keeps the ones published in <b>biology journals</b>, and checks whether those works' abstracts use the word <b>astrobiology</b>.</p>
+        <p class="empty">Pick a date range in the sidebar and press <b>Run analysis</b>.</p>
+      </section>
+    </div>
+  </main>
+</div>
+<footer>Data: <a href="https://www.crossref.org/" target="_blank" rel="noopener">Crossref</a> (IJA papers &amp; reference lists), <a href="https://openalex.org/" target="_blank" rel="noopener">OpenAlex</a> (cited works, journal topics, abstracts), <a href="https://europepmc.org/" target="_blank" rel="noopener">Europe PMC</a> (fallback abstracts). Runs entirely in your browser · <a href="https://github.com/xinnyuguo/astrobio-citation-scan" target="_blank" rel="noopener">Source on GitHub</a> (MIT).</footer>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const PAGE_SRC = '<!doctype html>\n' + document.documentElement.outerHTML;
+const DEFAULT_TERMS = `astrobiolog*
+astro-biolog*`;
+
+const CLS = {
+  hit:   {label: 'Mentions astrobiology',  color: 'var(--s-strong)'},
+  none:  {label: 'No mention',             color: 'var(--s-none)'},
+  noabs: {label: 'No abstract available',  color: 'var(--s-noabs)'},
+};
+const ORDER = ['hit', 'none', 'noabs'];
+
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('acs:' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('acs:' + k, JSON.stringify(v)); } catch {} },
+};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const iso = d => d.toISOString().slice(0, 10);
+const fmt = n => n.toLocaleString('en-US');
+const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '–';
+
+// DOM builder: text children are inserted as text nodes, so untrusted labels are never parsed as HTML.
+function h(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'class') e.className = v;
+    else if (k === 'style') e.style.cssText = v;
+    else if (k === 'tip') attachTip(e, v);
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c != null && c !== false) e.append(c instanceof Node ? c : String(c));
+  return e;
+}
+
+let RESULT = null, CONFIG = null, TAB = 'cited', OPEN = new Set();
+const SORT = {cited: ['cls', 1], papers: ['date', -1], journals: ['n', -1]};
+
+// ---------------------------------------------------------------- controls
+function initControls(cfg) {
+  CONFIG = cfg;
+  const today = new Date();
+  const monthsAgo = m => { const d = new Date(today); d.setMonth(d.getMonth() - m); return d; };
+  $('to').value = store.get('to', iso(today));
+  $('from').value = store.get('from', iso(monthsAgo(12)));
+  const presets = [['1 mo', 1], ['3 mo', 3], ['6 mo', 6], ['1 yr', 12], ['2 yr', 24], ['5 yr', 60]];
+  const markPreset = () => document.querySelectorAll('#presets .chip').forEach(c =>
+    c.classList.toggle('on', $('to').value === iso(today) && $('from').value === iso(monthsAgo(+c.dataset.m))));
+  for (const [label, m] of presets) {
+    $('presets').append(h('button', {class: 'chip', 'data-m': m, onclick: () => { $('to').value = iso(today); $('from').value = iso(monthsAgo(m)); markPreset(); }}, label));
+  }
+  $('from').oninput = $('to').oninput = markPreset; markPreset();
+
+  const chosen = store.get('fields', cfg.bio_fields_default);
+  for (const f of cfg.bio_fields_all) {
+    $('fields').append(h('label', {}, h('input', {type: 'checkbox', value: f, checked: chosen.includes(f) || null}), f));
+  }
+  $('thr').value = store.get('thr', 0.5);
+  const showThr = () => $('thrv').textContent = Math.round($('thr').value * 100) + '%';
+  $('thr').oninput = showThr; showThr();
+
+  $('terms').value = store.get('terms', DEFAULT_TERMS);
+  $('intitle').checked = store.get('intitle', false);
+  $('oakey').value = store.get('oakey', '');
+  $('mailto').value = store.get('mailto', '');
+  let t;
+  for (const id of ['terms', 'intitle']) $(id).addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(() => { store.set('terms', $('terms').value); store.set('intitle', $('intitle').checked); render(); }, 250);
+  });
+  $('run').onclick = run;
+  $('export').onclick = exportHtml;
+}
+
+// ---------------------------------------------------------------- keyword matching
+function termRegex(term, flags = 'i') {
+  const src = term.split('*').map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[\s-]+/g, '[\\s\\-]+')).join('[\\w-]*');
+  return new RegExp(`\\b(?:${src})\\b`, flags);
+}
+const termsOf = text => [...new Set(text.split('\n').map(s => s.trim()).filter(Boolean))];
+
+function classify() {
+  const terms = termsOf($('terms').value).map(t => termRegex(t).source);
+  const re = terms.length ? new RegExp(terms.join('|'), 'gi') : null;
+  const withTitle = $('intitle').checked;
+  for (const c of RESULT.cited) {
+    const text = (withTitle ? c.title + ' \n ' : '') + (c.abstract || '');
+    // The word forms actually found, e.g. "astrobiological", "astrobiologists".
+    c.forms = re ? [...new Set([...text.matchAll(re)].map(m => m[0].toLowerCase().replace(/[\s-]+/g, '-')))] : [];
+    c.cls = c.forms.length ? 'hit' : c.abstract ? 'none' : 'noabs';
+  }
+  return re;
+}
+const highlight = (text, re) => re ? esc(text).replace(re, m => `<mark>${m}</mark>`) : esc(text);
+
+// ---------------------------------------------------------------- pipeline (browser port of pipeline.py)
+// IJA papers in a date range -> cited works -> those in biology journals -> abstracts.
+//   Crossref: IJA articles + reference lists. OpenAlex: cited works' metadata and each journal's topic profile.
+//   Europe PMC, then Crossref: fallback abstracts when OpenAlex has none.
+const IJA_ISSN = '1473-5504';
+const CROSSREF = 'https://api.crossref.org';
+const OPENALEX = 'https://api.openalex.org';
+const EUROPEPMC = 'https://www.ebi.ac.uk/europepmc/webservices/rest/search';
+
+// OpenAlex "fields" (topic taxonomy) that count as biology.
+const BIOLOGY_FIELDS_DEFAULT = [
+  'Agricultural and Biological Sciences',
+  'Biochemistry, Genetics and Molecular Biology',
+  'Immunology and Microbiology',
+  'Neuroscience',
+];
+const ALL_LIFE_SCIENCE_FIELDS = [...BIOLOGY_FIELDS_DEFAULT,
+  'Environmental Science',
+  'Medicine',
+  'Pharmacology, Toxicology and Pharmaceutics',
+  'Veterinary',
+];
+const OPENALEX_BATCH = 50;
+
+// IndexedDB key/value store so repeated runs in this browser don't spend API budget again.
+// Falls back to memory when IndexedDB is unavailable (e.g. private windows).
+const CACHE = (() => {
+  let dbp = null;
+  const mem = new Map();
+  const open = () => dbp ||= new Promise(res => {
+    try {
+      const rq = indexedDB.open('astrobio-citation-cache', 1);
+      rq.onupgradeneeded = () => rq.result.createObjectStore('kv');
+      rq.onsuccess = () => res(rq.result);
+      rq.onerror = rq.onblocked = () => res(null);
+    } catch { res(null); }
+  });
+  const done = tx => new Promise(res => { tx.oncomplete = tx.onerror = tx.onabort = () => res(); });
+  return {
+    async getMany(keys, maxAge = null) {
+      const db = await open(), out = {}, now = Date.now() / 1000;
+      const keep = (k, rec) => { if (rec && (maxAge == null || now - rec.ts < maxAge)) out[k] = rec.v; };
+      if (!db) { for (const k of keys) keep(k, mem.get(k)); return out; }
+      const tx = db.transaction('kv', 'readonly'), st = tx.objectStore('kv');
+      for (const k of keys) { const r = st.get(k); r.onsuccess = () => keep(k, r.result); }
+      await done(tx);
+      return out;
+    },
+    async setMany(items) {
+      const db = await open(), ts = Date.now() / 1000;
+      if (!db) { for (const [k, v] of Object.entries(items)) mem.set(k, {v, ts}); return; }
+      const tx = db.transaction('kv', 'readwrite'), st = tx.objectStore('kv');
+      for (const [k, v] of Object.entries(items)) st.put({v, ts}, k);
+      await done(tx);
+    },
+  };
+})();
+
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+const cmp = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+
+function makeHttp(openalexKey, mailto) {
+  async function get(url, params, tries = 4) {
+    const q = new URLSearchParams(params).toString();
+    for (let attempt = 0; ; attempt++) {
+      try {
+        const r = await fetch(q ? `${url}?${q}` : url);
+        if (!r.ok) throw new Error(`HTTP ${r.status}: ${(await r.text()).slice(0, 200)}`);
+        return await r.json();
+      } catch (e) {
+        if (attempt === tries - 1) throw e;
+        await sleep(1000 * 2 ** attempt);
+      }
+    }
+  }
+  return {
+    get,
+    openalex: (path, params) => get(OPENALEX + path, openalexKey ? {...params, api_key: openalexKey} : params),
+    crossref: (path, params) => get(CROSSREF + path, mailto ? {...params, mailto} : params),
+  };
+}
+
+// Run fn over items with at most n in flight; results keep input order (like ThreadPoolExecutor.map).
+async function pmap(items, n, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  await Promise.all(Array.from({length: Math.min(n, items.length)}, async () => {
+    while (next < items.length) { const i = next++; out[i] = await fn(items[i]); }
+  }));
+  return out;
+}
+
+function normDoi(doi) {
+  if (!doi) return null;
+  doi = doi.trim().toLowerCase().replace(/^(https?:\/\/(dx\.)?doi\.org\/|doi:)/, '');
+  return doi || null;
+}
+
+function dateOf(item) {
+  for (const key of ['published-online', 'published-print', 'published', 'issued']) {
+    const parts = (item[key] || {})['date-parts'] || [[]];
+    if (parts.length && parts[0] && parts[0].length && parts[0][0]) {
+      return [...parts[0], null, null].slice(0, 3)
+        .map((x, i) => x ? (i ? String(x).padStart(2, '0') : String(x)) : null).filter(Boolean).join('-');
+    }
+  }
+  return '';
+}
+
+function stripTags(text) {
+  if (!text) return '';
+  return text.replace(/<jats:title>[\s\S]*?<\/jats:title>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function abstractFromIndex(inv) {
+  if (!inv || !Object.keys(inv).length) return '';
+  const pos = new Map();
+  for (const [word, idxs] of Object.entries(inv)) for (const i of idxs) pos.set(i, word);
+  return [...pos.keys()].sort((a, b) => a - b).map(i => pos.get(i)).join(' ');
+}
+
+// Path segment encoding matching Python's quote(d, safe='/').
+const quotePath = d => encodeURIComponent(d).replace(/%2F/gi, '/')
+  .replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+
+async function fetchIjaPapers(http, dateFrom, dateTo, log) {
+  log(`Crossref: listing International Journal of Astrobiology articles ${dateFrom} → ${dateTo}`);
+  const papers = [];
+  let cursor = '*';
+  while (true) {
+    const data = (await http.crossref(`/journals/${IJA_ISSN}/works`, {
+      filter: `from-online-pub-date:${dateFrom},until-online-pub-date:${dateTo},type:journal-article`,
+      rows: 200,
+      cursor,
+      select: 'DOI,title,author,published,published-online,published-print,issued,URL,reference',
+    })).message;
+    for (const it of data.items) {
+      const authors = (it.author || []).map(a => [a.given, a.family].filter(Boolean).join(' ') || a.name || '');
+      const refs = it.reference || [];
+      papers.push({
+        doi: normDoi(it.DOI),
+        title: stripTags((it.title || [''])[0]),
+        authors,
+        date: dateOf(it),
+        url: `https://doi.org/${it.DOI}`,
+        ref_total: refs.length,
+        ref_dois: [...new Set(refs.filter(r => r.DOI).map(r => normDoi(r.DOI)))].sort(cmp),
+      });
+    }
+    cursor = data['next-cursor'];
+    if (!data.items.length || !cursor || papers.length >= data['total-results']) break;
+  }
+  papers.sort((a, b) => cmp(b.date, a.date));
+  log(`  found ${papers.length} articles`);
+  return papers;
+}
+
+// OpenAlex metadata for each DOI; cached 90 days (published metadata rarely changes).
+async function fetchWorks(http, dois, log, progress) {
+  const cached = await CACHE.getMany(dois.map(d => 'w:' + d), 90 * 86400);
+  const works = Object.fromEntries(Object.entries(cached).map(([k, v]) => [k.slice(2), v]));
+  const todo = dois.filter(d => !(d in works) && !d.includes(',') && !d.includes('|'));
+  log(`OpenAlex: ${dois.length} unique cited DOIs (${Object.keys(works).length} cached, ${todo.length} to fetch)`);
+
+  const batches = [];
+  for (let i = 0; i < todo.length; i += OPENALEX_BATCH) batches.push(todo.slice(i, i + OPENALEX_BATCH));
+  let done = 0;
+  const run = async batch => {
+    const data = await http.openalex('/works', {
+      filter: 'doi:' + batch.join('|'),
+      per_page: 100,
+      select: 'id,doi,title,publication_year,primary_location,abstract_inverted_index,type',
+    });
+    const found = {};
+    for (const w of data.results || []) {
+      const src = (w.primary_location || {}).source || {};
+      const inv = w.abstract_inverted_index;
+      found[normDoi(w.doi)] = {
+        title: w.title || '',
+        year: w.publication_year ?? null,
+        type: w.type ?? null,
+        source_id: (src.id || '').split('/').pop() || null,
+        journal: src.display_name ?? null,
+        abstract: abstractFromIndex(inv),
+        abstract_src: inv && Object.keys(inv).length ? 'openalex' : null,
+      };
+    }
+    for (const d of batch) if (!(d in found)) found[d] = null;  // remember misses too, so we don't re-query them
+    await CACHE.setMany(Object.fromEntries(Object.entries(found).map(([d, v]) => ['w:' + d, v])));
+    progress(++done, batches.length);
+    return found;
+  };
+  for (const found of await pmap(batches, 4, run)) Object.assign(works, found);
+  return works;
+}
+
+async function fetchSources(http, sourceIds, log) {
+  const cached = await CACHE.getMany(sourceIds.map(s => 's:' + s), 30 * 86400);
+  const sources = Object.fromEntries(Object.entries(cached).map(([k, v]) => [k.slice(2), v]));
+  const todo = sourceIds.filter(s => !(s in sources));
+  log(`OpenAlex: topic profiles of ${sourceIds.length} journals (${todo.length} to fetch)`);
+  for (let i = 0; i < todo.length; i += OPENALEX_BATCH) {
+    const batch = todo.slice(i, i + OPENALEX_BATCH);
+    const data = await http.openalex('/sources', {
+      filter: 'ids.openalex:' + batch.join('|'),
+      per_page: 100,
+      select: 'id,display_name,type,issn_l,topics',
+    });
+    const found = {};
+    for (const src of data.results || []) {
+      const fields = {};
+      for (const t of src.topics || []) fields[t.field.display_name] = (fields[t.field.display_name] || 0) + t.count;
+      found[src.id.split('/').pop()] = {name: src.display_name, type: src.type ?? null, fields};
+    }
+    for (const sid of batch) if (!(sid in found)) found[sid] = null;
+    await CACHE.setMany(Object.fromEntries(Object.entries(found).map(([k, v]) => ['s:' + k, v])));
+    Object.assign(sources, found);
+  }
+  return sources;
+}
+
+function bioShare(source, bioFields) {
+  if (!source || !Object.keys(source.fields).length) return 0;
+  const entries = Object.entries(source.fields);
+  const total = entries.reduce((a, [, v]) => a + v, 0);
+  return entries.filter(([k]) => bioFields.has(k)).reduce((a, [, v]) => a + v, 0) / total;
+}
+
+// Fallbacks for biology-journal works whose abstract OpenAlex lacks: Europe PMC, then Crossref.
+async function fillMissingAbstracts(http, works, dois, log) {
+  const missing = dois.filter(d => works[d] && !works[d].abstract && !works[d].fallback_tried);
+  if (!missing.length) return;
+  log(`Europe PMC / Crossref: looking up abstracts for ${missing.length} works OpenAlex has none for`);
+
+  const europepmc = async d => {
+    const data = await http.get(EUROPEPMC, {query: `DOI:"${d}"`, resultType: 'core', format: 'json', pageSize: 1});
+    const res = (data.resultList || {}).result || [];
+    return res.length ? stripTags(res[0].abstractText) : '';
+  };
+  const crossref = async d => stripTags((await http.crossref(`/works/${quotePath(d)}`, {})).message.abstract);
+
+  const results = await pmap(missing, 4, async d => {
+    for (const [name, fn] of [['europepmc', europepmc], ['crossref', crossref]]) {
+      let text;
+      try { text = await fn(d); } catch { text = ''; }
+      if (text) return [d, text, name];
+    }
+    return [d, '', null];
+  });
+  for (const [d, text, src] of results) {
+    works[d].fallback_tried = true;
+    if (text) { works[d].abstract = text; works[d].abstract_src = src; }
+  }
+  await CACHE.setMany(Object.fromEntries(missing.map(d => ['w:' + d, works[d]])));
+}
+
+async function runPipeline(params, log, progress) {
+  if (!params.date_from || !params.date_to) throw new Error('date_from and date_to are required');
+  const http = makeHttp(params.openalex_key, params.mailto);
+  const bioFields = new Set(params.bio_fields?.length ? params.bio_fields : BIOLOGY_FIELDS_DEFAULT);
+  const threshold = +(params.threshold ?? 0.5);
+
+  const papers = await fetchIjaPapers(http, params.date_from, params.date_to, log);
+  const allDois = [...new Set(papers.flatMap(p => p.ref_dois))].sort(cmp);
+  const refTotal = papers.reduce((a, p) => a + p.ref_total, 0);
+  log(`  ${refTotal} references in total, ${papers.reduce((a, p) => a + p.ref_dois.length, 0)} with a DOI`);
+
+  const works = await fetchWorks(http, allDois, log, progress);
+  const sourceIds = [...new Set(Object.values(works).filter(w => w && w.source_id).map(w => w.source_id))].sort(cmp);
+  const sources = await fetchSources(http, sourceIds, log);
+
+  const bioDois = allDois.filter(d => works[d] && works[d].source_id
+    && bioShare(sources[works[d].source_id], bioFields) >= threshold);
+  log(`  ${bioDois.length} cited works are in biology journals (biology topic share ≥ ${Math.round(threshold * 100)}%)`);
+  await fillMissingAbstracts(http, works, bioDois, log);
+
+  const citedBy = {};
+  for (const p of papers) for (const d of p.ref_dois) (citedBy[d] ||= []).push(p.doi);
+
+  const bioSet = new Set(bioDois);
+  // Where every unique cited work was published, by the journal's dominant OpenAlex field.
+  const refFields = new Map();
+  const bump = k => refFields.set(k, (refFields.get(k) || 0) + 1);
+  for (const d of allDois) {
+    const w = works[d];
+    const src = w && w.source_id ? sources[w.source_id] : null;
+    if (bioSet.has(d)) bump('Biology journals');
+    else if (!w) bump('Not found in OpenAlex');
+    else if (!src || !Object.keys(src.fields).length) bump('Books, preprints & other');
+    else {
+      let top = null;
+      for (const [k, v] of Object.entries(src.fields)) if (top === null || v > src.fields[top]) top = k;
+      bump(bioFields.has(top) ? 'Biology-leaning, below threshold' : top);
+    }
+  }
+
+  const cited = bioDois.map(d => {
+    const w = works[d];
+    return {
+      doi: d,
+      title: w.title,
+      year: w.year,
+      journal: w.journal,
+      bio_share: Math.round(bioShare(sources[w.source_id], bioFields) * 1000) / 1000,
+      abstract: w.abstract,
+      abstract_src: w.abstract_src,
+      cited_by: citedBy[d],
+    };
+  });
+
+  for (const p of papers) {
+    p.n_resolved = p.ref_dois.filter(d => works[d]).length;
+    p.bio_dois = p.ref_dois.filter(d => bioSet.has(d));
+    p.n_ref_dois = p.ref_dois.length;
+    delete p.ref_dois;
+  }
+
+  log('Done.');
+  const {openalex_key, mailto, ...shown} = params;
+  return {
+    params: shown,
+    stats: {
+      papers: papers.length,
+      refs_total: refTotal,
+      refs_with_doi: papers.reduce((a, p) => a + p.n_ref_dois, 0),
+      unique_dois: allDois.length,
+      resolved: allDois.filter(d => works[d]).length,
+      bio: bioDois.length,
+      bio_with_abstract: cited.filter(c => c.abstract).length,
+    },
+    ref_fields: [...refFields].sort((a, b) => b[1] - a[1]),
+    papers,
+    cited,
+  };
+}
+
+// ---------------------------------------------------------------- run
+async function run() {
+  const fields = [...document.querySelectorAll('#fields input:checked')].map(i => i.value);
+  const params = {date_from: $('from').value, date_to: $('to').value, threshold: +$('thr').value, bio_fields: fields,
+                  openalex_key: $('oakey').value.trim(), mailto: $('mailto').value.trim()};
+  store.set('from', params.date_from); store.set('to', params.date_to); store.set('thr', params.threshold);
+  store.set('fields', fields); store.set('oakey', params.openalex_key); store.set('mailto', params.mailto);
+  $('run').disabled = true; $('run').textContent = 'Running…';
+  $('status').style.display = 'block'; $('log').textContent = ''; $('barfill').style.width = '0';
+  $('results').classList.add('loading');
+  const lines = [];
+  const log = msg => { lines.push(msg); $('log').textContent = lines.join('\n'); $('log').scrollTop = 1e9; };
+  const progress = (done, total) => { $('barfill').style.width = (100 * done / total) + '%'; };
+  try {
+    RESULT = await runPipeline(params, log, progress);
+    $('barfill').style.width = '100%'; OPEN.clear(); render(); $('export').disabled = false;
+    setTimeout(() => { $('status').style.display = 'none'; }, 1200);
+  } catch (e) {
+    $('log').append(h('div', {class: 'err'}, 'Error: ' + e.message));
+  } finally {
+    $('run').disabled = false; $('run').textContent = 'Run analysis'; $('results').classList.remove('loading');
+  }
+}
+
+// ---------------------------------------------------------------- tooltip
+function attachTip(el, spec) {
+  el.tabIndex = 0;
+  const show = ev => {
+    const tip = $('tip'); tip.replaceChildren();
+    const s = typeof spec === 'function' ? spec() : spec;
+    tip.append(h('div', {class: 't'}, s.title));
+    for (const [value, label, color] of s.rows) {
+      tip.append(h('div', {class: 'r'}, h('span', {class: 'key', style: `background:${color || 'transparent'}`}), h('b', {}, value), label));
+    }
+    tip.style.display = 'block';
+    const r = ev.clientX != null && ev.type !== 'focus' ? {x: ev.clientX, y: ev.clientY} : (() => { const b = el.getBoundingClientRect(); return {x: b.left + b.width / 2, y: b.top}; })();
+    const w = tip.offsetWidth, hgt = tip.offsetHeight;
+    tip.style.left = Math.min(window.innerWidth - w - 8, Math.max(8, r.x + 12)) + 'px';
+    tip.style.top = (r.y - hgt - 12 < 8 ? r.y + 16 : r.y - hgt - 12) + 'px';
+  };
+  const hide = () => { $('tip').style.display = 'none'; };
+  el.addEventListener('pointermove', show); el.addEventListener('focus', show);
+  el.addEventListener('pointerleave', hide); el.addEventListener('blur', hide);
+}
+
+// ---------------------------------------------------------------- chart primitives
+const legend = keys => h('div', {class: 'legend'}, keys.map(([label, color]) => h('span', {}, h('i', {class: 'sw', style: `background:${color}`}), label)));
+
+// One horizontal stacked bar per row; segments are [{value, color, label}]. `max` sets a shared scale (null = 100% of row).
+function stackedBars(rows, {max = null, long = false, valueText} = {}) {
+  const wrap = h('div', {class: 'bars' + (long ? ' long' : '')});
+  const scale = max ?? 1;
+  for (const row of rows) {
+    const total = row.segments.reduce((a, s) => a + s.value, 0);
+    const width = max == null ? 100 : (total / scale) * 82;
+    const tip = {title: row.tipTitle || row.label, rows: row.segments.filter(s => s.value).map(s => [fmt(s.value), s.label, s.color])};
+    const stack = h('div', {class: 'stack', style: `width:${width}%`},
+      row.segments.filter(s => s.value > 0).map(s => h('div', {class: 'seg', style: `flex:${s.value} 1 0;background:${s.color}`, tip})));
+    wrap.append(
+      h('div', {class: 'name', title: row.label}, row.label, row.sub ? h('small', {}, ' ' + row.sub) : null),
+      h('div', {class: 'track'}, total ? stack : null, valueText ? h('span', {class: 'val'}, valueText(row, total)) : null),
+    );
+  }
+  return wrap;
+}
+
+// Donut: slices [{label, value, color}], with a 2px surface gap between slices and a legend that carries every value.
+function donut(slices, {center, centerLabel, tipNote = ''} = {}) {
+  const NS = 'http://www.w3.org/2000/svg', R = 110, r = 70, total = slices.reduce((a, s) => a + s.value, 0) || 1;
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 220 220'); svg.setAttribute('width', 220); svg.setAttribute('height', 220);
+  const pt = (rad, a) => [R + rad * Math.cos(a), R + rad * Math.sin(a)].map(v => v.toFixed(2)).join(' ');
+  let a0 = -Math.PI / 2;
+  for (const s of slices.filter(s => s.value > 0)) {
+    const a1 = a0 + 2 * Math.PI * s.value / total, end = s.value === total ? a1 - 1e-4 : a1, large = end - a0 > Math.PI ? 1 : 0;
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', `M ${pt(R, a0)} A ${R} ${R} 0 ${large} 1 ${pt(R, end)} L ${pt(r, end)} A ${r} ${r} 0 ${large} 0 ${pt(r, a0)} Z`);
+    path.setAttribute('fill', s.color); path.setAttribute('stroke', 'var(--bg)'); path.setAttribute('stroke-width', 2);
+    attachTip(path, {title: s.label, rows: [[fmt(s.value), `${pct(s.value, total)} ${tipNote}`.trim(), s.color]]});
+    svg.append(path); a0 = a1;
+  }
+  return h('div', {class: 'donut-wrap'},
+    h('div', {class: 'donut'}, svg, h('div', {class: 'center'}, h('b', {}, center), h('span', {}, centerLabel))),
+    h('div', {class: 'dlegend'}, slices.flatMap(s => [h('i', {class: 'sw', style: `background:${s.color}`}), h('span', {class: 'lab', title: s.label}, s.label), h('span', {class: 'num'}, fmt(s.value)), h('span', {class: 'pc'}, pct(s.value, total))])));
+}
+
+const section = (id, title, caption, ...body) => h('section', {class: 'block', id}, h('h2', {}, title), caption ? h('p', {class: 'cap'}, caption) : null, ...body);
+const sub = (title, caption, ...body) => h('div', {}, h('h4', {style: 'margin-top:0'}, title), caption ? h('p', {class: 'cap'}, caption) : null, ...body);
+
+// ---------------------------------------------------------------- render
+function counts() {
+  const n = {hit: 0, none: 0, noabs: 0};
+  for (const c of RESULT.cited) n[c.cls]++;
+  return n;
+}
+
+function render() {
+  if (!RESULT) return;
+  const re = classify();
+  const s = RESULT.stats, n = counts(), withAbs = n.hit + n.none, hits = n.hit;
+  const P = RESULT.params;
+
+  const overview = h('section', {class: 'block', id: 'overview', style: 'margin-top:0'},
+    h('h2', {}, 'Overview'),
+    h('p', {class: 'intro'}, `${fmt(s.papers)} IJA papers published between ${P.date_from} and ${P.date_to} cite ${fmt(s.unique_dois)} distinct works with a DOI. `,
+      h('b', {}, fmt(s.bio)), ` of them appeared in biology journals, and ${fmt(withAbs)} of those have an abstract we could retrieve.`),
+    h('div', {class: 'notice'},
+      h('div', {class: 'big'}, pct(hits, withAbs)),
+      h('div', {},
+        h('div', {class: 'what'}, 'of the biology-journal papers cited by IJA use the word “astrobiology” in their abstract.'),
+        h('div', {class: 'meta'}, `${fmt(hits)} of ${fmt(withAbs)} papers with an abstract, counting every form of the word.`))),
+    funnel(s, n));
+
+  const explore = h('section', {class: 'block', id: 'explore'});
+  const prev = {q: $('q')?.value ?? '', f: $('flt')?.value ?? 'all', typing: document.activeElement?.id === 'q'};
+  $('results').replaceChildren(overview, fieldsCard(), outcomeCard(n), papersCard(), journalsCard(), explore);
+  renderExplore(re, prev);
+}
+
+function funnel(s, n) {
+  const stage = 'var(--s-stage)';
+  const one = (label, value, sub) => ({label, sub, segments: [{value, color: stage, label: 'works'}]});
+  const rows = [
+    one('All references', s.refs_total),
+    one('With a DOI', s.refs_with_doi),
+    one('Unique cited works', s.unique_dois),
+    one('Found in OpenAlex', s.resolved),
+    one('In biology journals', s.bio),
+    one('With an abstract', s.bio_with_abstract),
+    {label: 'Mention astrobiology', segments: [{value: n.hit, color: CLS.hit.color, label: 'works'}]},
+  ];
+  return h('div', {style: 'margin-top:28px'}, h('h4', {}, 'From references to astrobiology mentions'),
+    h('p', {class: 'cap'}, 'Each step narrows the set. Most of the loss happens at the biology-journal step: IJA papers mostly cite astronomy and planetary science.'),
+    stackedBars(rows, {max: s.refs_total, valueText: (r, t) => h('span', {}, h('b', {}, fmt(t)), r === rows[0] ? '' : ` · ${pct(t, s.refs_total)}`)}));
+}
+
+function fieldsCard() {
+  const get = name => RESULT.ref_fields.find(([k]) => k === name)?.[1] || 0;
+  const total = RESULT.ref_fields.reduce((a, [, v]) => a + v, 0);
+  const others = RESULT.ref_fields.filter(([k]) => k !== 'Biology journals' && k !== 'Biology-leaning, below threshold');
+  const grays = ['var(--s-stage)', 'var(--s-g2)', 'var(--s-g3)'];
+  const slices = [
+    {label: 'Biology journals', value: get('Biology journals'), color: 'var(--s-strong)'},
+    {label: 'Biology-leaning, below threshold', value: get('Biology-leaning, below threshold'), color: 'var(--s-near)'},
+    ...others.slice(0, 3).map(([k, v], i) => ({label: k, value: v, color: grays[i]})),
+    {label: 'All other fields', value: others.slice(3).reduce((a, [, v]) => a + v, 0), color: 'var(--s-noabs)'},
+  ];
+  return section('sources', 'Where IJA references are published',
+    'Unique cited works, grouped by the main field of the journal they appeared in.',
+    donut(slices, {center: pct(slices[0].value, total), centerLabel: 'in biology journals', tipNote: 'of cited works'}),
+    h('p', {class: 'note'}, '“Biology-leaning, below threshold” are journals whose main field is biology but whose biology share is under the threshold (e.g. ISME J, Environmental Microbiology). Lower the threshold in the sidebar to count them as biology.'));
+}
+
+function outcomeCard(n) {
+  const withAbs = n.hit + n.none;
+  return section('abstracts', 'What the biology-journal papers’ abstracts say',
+    'Every cited paper in a biology journal: does its abstract use the word “astrobiology”?',
+    donut(ORDER.map(k => ({label: CLS[k].label, value: n[k], color: CLS[k].color})),
+      {center: pct(n.hit, withAbs), centerLabel: 'of papers with an abstract', tipNote: 'of biology-journal papers'}),
+    h('div', {style: 'margin-top:26px'}, wordForms()));
+}
+
+function wordForms() {
+  const tally = new Map();
+  for (const c of RESULT.cited) for (const f of c.forms) tally.set(f, (tally.get(f) || 0) + 1);
+  const top = [...tally].sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const body = top.length
+    ? stackedBars(top.map(([f, n]) => ({label: f, segments: [{value: n, color: CLS.hit.color, label: 'papers'}]})),
+        {max: top[0][1], valueText: (r, t) => h('b', {}, fmt(t))})
+    : h('div', {class: 'small'}, 'No abstract matched.');
+  return sub('Word forms found', 'Papers whose abstract uses each form of the word.', body);
+}
+
+function papersCard() {
+  const by = Object.fromEntries(RESULT.cited.map(c => [c.doi, c]));
+  const rows = RESULT.papers.filter(p => p.ref_total).map(p => {
+    const bio = p.bio_dois.map(d => by[d]);
+    const k = cls => bio.filter(c => c.cls === cls).length;
+    const hit = k('hit'), other = bio.length - hit;
+    return {label: p.title, sub: '', tipTitle: p.title, share: bio.length / p.ref_total, ref_total: p.ref_total, date: p.date, segments: [
+      {value: hit, color: CLS.hit.color, label: 'biology refs · mention astrobiology'},
+      {value: other, color: CLS.none.color, label: 'biology refs · no mention / no abstract'},
+      {value: p.ref_total - bio.length, color: 'var(--s-other)', label: 'other references'},
+    ]};
+  }).sort((a, b) => b.share - a.share);
+  const skipped = RESULT.papers.length - rows.length;
+  return section('papers', 'Biology citations in each IJA paper',
+    'Share of each paper’s reference list that is in biology journals, sorted by that share. Hover a bar for counts.',
+    legend([['Biology ref · mentions astrobiology', CLS.hit.color], ['Biology ref · no mention / no abstract', CLS.none.color], ['Not a biology journal, or no DOI', 'var(--s-other)']]),
+    stackedBars(rows, {long: true, valueText: (r) => h('span', {}, h('b', {}, pct(r.ref_total - r.segments[2].value, r.ref_total)), ` biology · ${fmt(r.ref_total)} refs`)}),
+    skipped ? h('p', {class: 'note'}, `${skipped} paper(s) have no reference list deposited in Crossref and are not shown.`) : null);
+}
+
+function journalsCard() {
+  const m = new Map();
+  for (const c of RESULT.cited) {
+    const j = m.get(c.journal) || {hit: 0, none: 0, noabs: 0, total: 0};
+    j[c.cls]++; j.total++; m.set(c.journal, j);
+  }
+  const top = [...m].sort((a, b) => b[1].total - a[1].total).slice(0, 12);
+  return section('journals', 'Most-cited biology journals', 'Top journals by number of cited papers, split by abstract outcome.',
+    legend(ORDER.map(k => [CLS[k].label, CLS[k].color])),
+    stackedBars(top.map(([name, j]) => ({label: name || 'Unknown', segments: ORDER.map(k => ({value: j[k], color: CLS[k].color, label: CLS[k].label}))})),
+      {long: true, max: top[0]?.[1].total || 1, valueText: (r, t) => h('b', {}, fmt(t))}));
+}
+
+// ---------------------------------------------------------------- explore tables (HTML strings, all values escaped)
+const tag = cls => `<span class="tag"><i class="sw" style="background:${CLS[cls].color}"></i>${CLS[cls].label}</span>`;
+function sortRows(rows, [key, dir]) { return rows.sort((a, b) => { const x = a[key], y = b[key]; return (x > y ? 1 : x < y ? -1 : 0) * dir; }); }
+function th(table, key, label, num) {
+  const [k, d] = SORT[table];
+  return `<th class="${num ? 'num' : ''}" data-sort="${table}:${key}">${label}${k === key ? (d > 0 ? ' ↑' : ' ↓') : ''}</th>`;
+}
+
+function renderExplore(re, prev) {
+  const el = $('explore');
+  const tabs = [['cited', 'Cited biology papers'], ['papers', 'IJA papers'], ['journals', 'Journals']];
+  el.innerHTML = `<h2>Data</h2><p class="cap">Click a row to see the abstract with matched terms highlighted.</p>
+    <div class="tabs">${tabs.map(([k, l]) => `<button data-tab="${k}" class="${TAB === k ? 'on' : ''}">${l}</button>`).join('')}</div><div id="tabbody"></div>`;
+  const draw = () => {
+    const q = $('q')?.value ?? prev.q, f = $('flt')?.value ?? prev.f, typing = document.activeElement?.id === 'q' || prev.typing;
+    prev.typing = false;
+    $('tabbody').innerHTML = TAB === 'cited' ? citedTable(re, q, f) : TAB === 'papers' ? papersTable() : journalsTable();
+    if ($('q')) { $('q').value = q; $('flt').value = f; if (typing) $('q').focus(); }
+    el.querySelectorAll('[data-sort]').forEach(b => b.onclick = () => {
+      const [t, k] = b.dataset.sort.split(':');
+      SORT[t] = [k, SORT[t][0] === k ? -SORT[t][1] : (['title', 'journal', 'cls'].includes(k) ? 1 : -1)]; draw();
+    });
+    el.querySelectorAll('tr.item').forEach(r => r.onclick = () => { const d = r.dataset.doi; OPEN.has(d) ? OPEN.delete(d) : OPEN.add(d); draw(); });
+    if ($('q')) { $('q').oninput = draw; $('flt').onchange = draw; $('csv').onclick = () => exportCsv(filteredCited($('q').value, $('flt').value)); }
+  };
+  el.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
+    TAB = b.dataset.tab; OPEN.clear();
+    el.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('on', x === b)); draw();
+  });
+  draw();
+}
+
+function filteredCited(q, f) {
+  q = (q || '').toLowerCase();
+  let rows = RESULT.cited.map(c => ({...c, cites: c.cited_by.length, rank: ORDER.indexOf(c.cls)}));
+  if (f && f !== 'all') rows = rows.filter(c => c.cls === f);
+  if (q) rows = rows.filter(c => (c.title + ' ' + c.journal + ' ' + c.doi).toLowerCase().includes(q));
+  const [k, d] = SORT.cited;
+  return sortRows(rows, [k === 'cls' ? 'rank' : k, d]);
+}
+
+function citedTable(re, q, f) {
+  const rows = filteredCited(q, f);
+  const papers = Object.fromEntries(RESULT.papers.map(p => [p.doi, p]));
+  let out = `<div class="toolbar">
+    <input type="text" id="q" placeholder="Search title, journal or DOI">
+    <select id="flt"><option value="all">All outcomes</option><option value="hit">Mentions astrobiology</option><option value="none">No mention</option><option value="noabs">No abstract</option></select>
+    <span class="count">${fmt(rows.length)} papers</span><span class="spacer"></span><button class="btn" id="csv">Download CSV</button></div>
+    <div class="tablewrap"><table><thead><tr>${th('cited', 'cls', 'Outcome')}${th('cited', 'title', 'Cited paper')}${th('cited', 'journal', 'Journal')}${th('cited', 'year', 'Year', 1)}${th('cited', 'cites', 'Cited by', 1)}<th>Word forms</th></tr></thead><tbody>`;
+  for (const c of rows) {
+    out += `<tr class="item" data-doi="${esc(c.doi)}"><td>${tag(c.cls)}</td><td>${esc(c.title)}</td><td>${esc(c.journal)}</td>
+      <td class="num">${c.year ?? ''}</td><td class="num">${c.cites}</td>
+      <td class="terms">${c.forms.map(t => `<mark>${esc(t)}</mark>`).join(' ')}</td></tr>`;
+    if (OPEN.has(c.doi)) {
+      out += `<tr class="detail"><td></td><td colspan="5">
+        <div class="small"><a href="https://doi.org/${esc(c.doi)}" target="_blank" rel="noopener">doi:${esc(c.doi)}</a> · journal biology share ${Math.round(c.bio_share * 100)}%${c.abstract_src ? ' · abstract from ' + esc(c.abstract_src) : ''}</div>
+        <p class="abs">${$('intitle').checked ? '<b>' + highlight(c.title, re) + '</b><br>' : ''}${c.abstract ? highlight(c.abstract, re) : '<i>No abstract in OpenAlex, Europe PMC or Crossref.</i>'}</p>
+        <div class="small">Cited by these IJA papers:</div><ul>${c.cited_by.map(d => `<li><a href="https://doi.org/${esc(d)}" target="_blank" rel="noopener">${esc(papers[d]?.title || d)}</a> <span class="small">${esc(papers[d]?.date || '')}</span></li>`).join('')}</ul>
+      </td></tr>`;
+    }
+  }
+  return out + `</tbody></table></div>${rows.length ? '' : '<div class="empty">No papers match.</div>'}`;
+}
+
+function papersTable() {
+  const by = Object.fromEntries(RESULT.cited.map(c => [c.doi, c]));
+  const rows = sortRows(RESULT.papers.map(p => {
+    const bio = p.bio_dois.map(d => by[d]);
+    return {...p, n_bio: bio.length, n_hit: bio.filter(c => c.cls === 'hit').length};
+  }), SORT.papers);
+  let out = `<div class="tablewrap"><table><thead><tr>${th('papers', 'date', 'Published')}${th('papers', 'title', 'IJA paper')}${th('papers', 'ref_total', 'References', 1)}${th('papers', 'n_bio', 'In biology journals', 1)}${th('papers', 'n_hit', 'Mention astrobiology', 1)}</tr></thead><tbody>`;
+  for (const p of rows) {
+    out += `<tr class="item" data-doi="${esc(p.doi)}"><td class="small" style="white-space:nowrap">${esc(p.date)}</td><td>${esc(p.title)}<div class="small">${esc(p.authors.slice(0, 3).join(', '))}${p.authors.length > 3 ? ' et al.' : ''}</div></td>
+      <td class="num">${p.ref_total}</td><td class="num">${p.n_bio}</td><td class="num">${p.n_hit}</td></tr>`;
+    if (OPEN.has(p.doi)) {
+      out += `<tr class="detail"><td></td><td colspan="4"><div class="small"><a href="${esc(p.url)}" target="_blank" rel="noopener">doi:${esc(p.doi)}</a> · ${p.n_ref_dois} references with a DOI, ${p.n_resolved} found in OpenAlex</div>
+        <ul>${p.bio_dois.map(d => by[d]).sort((a, b) => ORDER.indexOf(a.cls) - ORDER.indexOf(b.cls))
+          .map(c => `<li>${tag(c.cls)} ${esc(c.title)} <span class="small">— ${esc(c.journal)}, ${c.year ?? ''}</span></li>`).join('') || '<li class="small">No biology-journal references.</li>'}</ul></td></tr>`;
+    }
+  }
+  return out + '</tbody></table></div>';
+}
+
+function journalsTable() {
+  const m = {};
+  for (const c of RESULT.cited) {
+    const j = m[c.journal] ||= {journal: c.journal, share: c.bio_share, n: 0, hit: 0, noabs: 0};
+    j.n++; if (c.cls === 'hit') j.hit++; if (c.cls === 'noabs') j.noabs++;
+  }
+  const rows = sortRows(Object.values(m).map(j => ({...j, rate: j.hit / Math.max(1, j.n - j.noabs)})), SORT.journals);
+  let out = `<div class="tablewrap"><table><thead><tr>${th('journals', 'journal', 'Journal')}${th('journals', 'share', 'Biology share', 1)}${th('journals', 'n', 'Cited papers', 1)}${th('journals', 'hit', 'Mention astrobiology', 1)}${th('journals', 'noabs', 'No abstract', 1)}${th('journals', 'rate', 'Mention rate', 1)}</tr></thead><tbody>`;
+  for (const j of rows) out += `<tr><td>${esc(j.journal)}</td><td class="num">${Math.round(j.share * 100)}%</td><td class="num">${j.n}</td><td class="num">${j.hit}</td><td class="num">${j.noabs}</td><td class="num">${Math.round(j.rate * 100)}%</td></tr>`;
+  return out + '</tbody></table></div>';
+}
+
+function exportCsv(rows) {
+  const cell = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const head = ['outcome', 'doi', 'title', 'journal', 'year', 'journal_bio_share', 'cited_by_n', 'cited_by_ija_dois', 'word_forms', 'abstract_source', 'abstract'];
+  const lines = [head.join(',')].concat(rows.map(c => [c.cls, c.doi, c.title, c.journal, c.year, c.bio_share, c.cites, c.cited_by.join('; '),
+    c.forms.join('; '), c.abstract_src, c.abstract].map(cell).join(',')));
+  const a = h('a', {href: URL.createObjectURL(new Blob(['\ufeff' + lines.join('\n')], {type: 'text/csv'})),
+                    download: `ija_bio_citations_${RESULT.params.date_from}_${RESULT.params.date_to}.csv`});
+  a.click();
+}
+
+// ---------------------------------------------------------------- standalone HTML export
+// The exported file is this same page with the results embedded as window.SNAPSHOT, so it works offline.
+async function exportHtml() {
+  const src = PAGE_SRC;
+  const snap = {config: CONFIG, result: RESULT, terms: $('terms').value, intitle: $('intitle').checked, generated: iso(new Date())};
+  const json = JSON.stringify(snap).replace(/</g, '\\u003c');
+  const i = src.indexOf('<script>');
+  const html = src.slice(0, i) + `<script>window.SNAPSHOT = ${json};<\/script>\n` + src.slice(i);
+  const a = h('a', {href: URL.createObjectURL(new Blob([html], {type: 'text/html'})),
+                    download: `astrobiology_citation_scan_${RESULT.params.date_from}_${RESULT.params.date_to}_v2.html`});
+  a.click();
+}
+
+function openSnapshot(snap) {
+  document.body.classList.add('snapshot');
+  initControls(snap.config);
+  RESULT = snap.result;
+  const P = RESULT.params;
+  $('from').value = P.date_from; $('to').value = P.date_to;
+  $('thr').value = P.threshold ?? 0.5; $('thr').dispatchEvent(new Event('input'));
+  document.querySelectorAll('#fields input').forEach(i => { i.checked = (P.bio_fields || snap.config.bio_fields_default).includes(i.value); });
+  $('terms').value = snap.terms; $('intitle').checked = snap.intitle;
+  for (const el of document.querySelectorAll('#from, #to, #thr, #fields input, #presets .chip')) el.disabled = true;
+  $('presets').style.display = 'none'; $('run').style.display = 'none'; $('export').style.display = 'none';
+  $('snapnote').style.display = 'block';
+  $('snapnote').textContent = `Snapshot exported on ${snap.generated}. Date range and biology settings are fixed; the astrobiology terms can still be edited.`;
+  render();
+}
+
+if (window.SNAPSHOT) openSnapshot(window.SNAPSHOT);
+else initControls({bio_fields_default: BIOLOGY_FIELDS_DEFAULT, bio_fields_all: ALL_LIFE_SCIENCE_FIELDS});
+</script>
+</body>
+</html>
