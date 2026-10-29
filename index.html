@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Astrobiology Citation Scan</title>
+<title>DeepAstroBio · Citation Scan</title>
+<meta name="description" content="DeepAstroBio: Towards Deeper Integration of Biology for the Next-Generation of Astrobiology Research. Citation Scan finds which biology papers cited by the International Journal of Astrobiology mention astrobiology.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Slab:wght@500;600;700&display=swap" rel="stylesheet">
@@ -291,12 +292,16 @@ mark { background: color-mix(in srgb, var(--s-strong) 18%, transparent); }
 @media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); } }
 .daterow input { font-size: 12px; padding: 6px 6px; }
 footer { font-size: 12px; }
+.masthead .site .tool { font-family: "Inter", -apple-system, sans-serif; font-weight: 500; color: var(--muted); margin-left: 6px; padding-left: 10px; border-left: 1px solid var(--line); }
+.hero { max-width: 1320px; margin: 0 auto; padding: 22px 32px 0; }
+.hero .tagline-main { margin: 0; font: italic 600 1.05em/1.4 "Roboto Slab", Georgia, serif; color: var(--ink); }
+@media (max-width: 960px) { .hero { padding: 18px 16px 0; } }
 </style>
 </head>
 <body>
 <header class="masthead">
   <nav>
-    <a class="site" href="#top">Astrobiology Citation Scan</a>
+    <a class="site" href="#top">DeepAstroBio <span class="tool">Citation Scan</span></a>
     <div class="links">
       <a href="#overview">Overview</a>
       <a href="#sources">Reference Sources</a>
@@ -308,6 +313,9 @@ footer { font-size: 12px; }
   </nav>
 </header>
 
+<div class="hero">
+  <p class="tagline-main">Towards Deeper Integration of Biology for the Next-Generation of Astrobiology Research</p>
+</div>
 <div class="layout" id="top">
   <aside>
     <h3>Settings</h3>
@@ -361,7 +369,7 @@ footer { font-size: 12px; }
     </div>
   </main>
 </div>
-<footer>Data: <a href="https://www.crossref.org/" target="_blank" rel="noopener">Crossref</a> (IJA papers &amp; reference lists), <a href="https://openalex.org/" target="_blank" rel="noopener">OpenAlex</a> (cited works, journal topics, abstracts), <a href="https://europepmc.org/" target="_blank" rel="noopener">Europe PMC</a> (fallback abstracts). Runs entirely in your browser · <a href="https://github.com/xinnyuguo/astrobio-citation-scan" target="_blank" rel="noopener">Source on GitHub</a> (MIT).</footer>
+<footer>Data: <a href="https://www.crossref.org/" target="_blank" rel="noopener">Crossref</a> (IJA papers &amp; reference lists), <a href="https://openalex.org/" target="_blank" rel="noopener">OpenAlex</a> (cited works, journal topics, abstracts), <a href="https://europepmc.org/" target="_blank" rel="noopener">Europe PMC</a> (fallback abstracts). Runs entirely in your browser · <a href="https://github.com/deepastrobio/deepastrobio.github.io" target="_blank" rel="noopener">Source on GitHub</a> (MIT).</footer>
 <div id="tip" role="tooltip"></div>
 
 <script>
@@ -1117,7 +1125,7 @@ async function exportHtml() {
   const i = src.indexOf('<script>');
   const html = src.slice(0, i) + `<script>window.SNAPSHOT = ${json};<\/script>\n` + src.slice(i);
   const a = h('a', {href: URL.createObjectURL(new Blob([html], {type: 'text/html'})),
-                    download: `astrobiology_citation_scan_${RESULT.params.date_from}_${RESULT.params.date_to}_v2.html`});
+                    download: `deepastrobio_citation_scan_${RESULT.params.date_from}_${RESULT.params.date_to}.html`});
   a.click();
 }
 

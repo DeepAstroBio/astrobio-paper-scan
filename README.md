@@ -1,6 +1,13 @@
-# Astrobiology Citation Scan
+# DeepAstroBio
 
-**Live site: https://xinnyuguo.github.io/astrobio-citation-scan/**
+*Towards Deeper Integration of Biology for the Next-Generation of Astrobiology Research*
+
+**Live site: https://deepastrobio.github.io/**
+
+DeepAstroBio is an open platform for finding and connecting the biology literature that matters to
+astrobiology. Its first tool is **Citation Scan**.
+
+## Citation Scan
 
 How often do the biology papers cited by the *International Journal of Astrobiology* (IJA) actually
 use the word "astrobiology"? Pick a date range, and the page lists the IJA papers published in it,
@@ -10,7 +17,7 @@ those works' **abstracts** mention astrobiology.
 Everything runs in your browser: there is no server, and nothing you enter leaves your machine except
 the queries sent to the public APIs below.
 
-## How it works
+### How it works
 
 | Step | Source | Notes |
 |---|---|---|
@@ -25,14 +32,14 @@ fast. A one-year scan takes about 20 seconds the first time and about a second a
 
 **Download as HTML** saves the current results as a single file that opens offline.
 
-## API budget
+### API budget
 
 OpenAlex without a key allows a small free daily budget per IP address; a one-year scan uses roughly
 40 requests. For heavy use, get a free key at https://openalex.org/settings/api and paste it into
 "API settings" in the sidebar. The contact email there puts your Crossref requests in Crossref's
 polite pool. Both are stored only in your browser.
 
-## Caveats
+### Caveats
 
 - The criterion is deliberately strict: a paper about, say, Mars analogues that never uses the word
   "astrobiology" counts as no mention. Add terms in the sidebar to widen it.
