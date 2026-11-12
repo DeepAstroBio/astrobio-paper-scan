@@ -292,13 +292,17 @@ mark { background: color-mix(in srgb, var(--s-strong) 18%, transparent); }
 @media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); } }
 .daterow input { font-size: 12px; padding: 6px 6px; }
 footer { font-size: 12px; }
-.masthead .site .tool { font-family: "Inter", -apple-system, sans-serif; font-weight: 500; color: var(--muted); margin-left: 6px; padding-left: 10px; border-left: 1px solid var(--line); }
+.masthead .tools { display: flex; gap: 2px; flex: none; background: var(--page); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.masthead .tools a { padding: 3px 12px; border-radius: 999px; color: var(--muted); text-decoration: none; font-size: .95em; white-space: nowrap; }
+.masthead .tools a:hover { color: var(--ink); }
+.masthead .tools a.on { background: var(--ink); color: var(--bg); font-weight: 600; }
 </style>
 </head>
 <body>
 <header class="masthead">
   <nav>
-    <a class="site" href="#top">DeepAstroBio <span class="tool">Paper Scan</span></a>
+    <a class="site" href="index.html">DeepAstroBio</a>
+    <div class="tools"><a class="on" href="index.html" aria-current="page">Paper Scan</a><a href="sheets.html">Field Sheets</a></div>
     <div class="links">
       <a href="#overview">Overview</a>
       <a href="#sources">Reference Sources</a>

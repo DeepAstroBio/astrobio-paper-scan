@@ -44,6 +44,15 @@ polite pool. Both are stored only in your browser.
 - Multidisciplinary journals (Nature Communications, PNAS, PLoS ONE) can pass the 50% threshold.
   Raise the threshold to make the biology filter stricter.
 
+## Field Sheets
+
+**https://deepastrobio.github.io/astrobio-paper-scan/sheets.html**
+
+Tables of IJA papers published online 2025-11-01 to 2026-10-31, their authors, the works they cite,
+and the field of every journal involved: each author's publication list split by journal field, and
+each cited work's field taken from its journal. The page shows every sheet of the workbook and links
+the Excel file ([`data/`](data/)). The README tab on the page explains how fields are assigned.
+
 ## Development
 
 The whole app is [`index.html`](index.html): open it in a browser to run it locally, no build step.
