@@ -7,56 +7,57 @@
     if (b && !b.classList.contains('on')) b.click();
   };
 
+  // sheet sizes and period, read from the Field Sheets page's own data so the text stays current
+  const sheetData = () => { try { return DATA; } catch { return null; } };  // eslint-disable-line no-undef
+  const rows = prefix => {
+    const sh = (sheetData()?.sheets || []).find(s => s.name.startsWith(prefix));
+    return sh ? (sh.rows ? sh.rows.length : sh.count || 0).toLocaleString('en-US') : '?';
+  };
+  const period = () => (sheetData()?.subtitle.match(/online (\S+ to \S+)/) || [, 'the study period'])[1];
+
   const PAGES = [
     {
-      key: 'tour:scan:v1',
+      key: 'tour:scan:v2',
       match: () => document.getElementById('run'),
       steps: [
-        {target: null, title: 'Welcome to Paper Scan',
-         text: 'Paper Scan takes papers from the International Journal of Astrobiology, collects everything they cite, keeps the works published in biology journals, and checks whether their abstracts use the word "astrobiology". This short guide shows what each control does.'},
-        {target: '.masthead .tools', title: 'Two tools',
-         text: 'Switch between Paper Scan (run your own scan) and Field Sheets (the prepared tables on authors, citations and fields).'},
-        {target: '#from', title: 'Date range',
-         text: 'Pick which IJA papers to scan by their online publication date. The quick links below (1 mo … 5 yr) fill in common ranges.'},
-        {target: '#thr', title: 'What counts as a biology journal',
-         text: 'A journal counts as biology when at least this share of its topics fall in the biology fields ticked below. Raise it to be stricter.'},
-        {target: '#fields', title: 'Biology fields',
-         text: 'Choose which research fields count as biology for the threshold above.'},
-        {target: '#terms', title: 'Words to look for',
-         text: 'An abstract counts as relevant when it contains one of these terms. * is a wildcard. Editing them re-scores the results instantly, without rerunning the scan.'},
-        {target: '#run', title: 'Run the scan',
-         text: 'Fetches the papers, their references and the abstracts straight from Crossref, OpenAlex and Europe PMC. A one-year scan takes about 20 seconds the first time and about a second after that.'},
-        {target: '#results', title: 'Results',
-         text: 'Charts and tables appear here: where the references were published, what their abstracts say, and a searchable list of every paper. The links in the top bar jump between sections.'},
-        {target: '#export', title: 'Save the results',
-         text: 'After a scan, download everything as one HTML file that opens offline.'},
-        {target: '[data-tour-start]', title: 'Replay this guide',
-         text: 'Click Guide any time to see this walkthrough again.'},
+        {target: null, title: 'Welcome to DeepAstroBio',
+         text: 'This site has two parts: Paper Scan, a tool to scan the International Journal of Astrobiology yourself, and Field Sheets, where the results of our field statistics live. A quick look at Paper Scan first.'},
+        {target: 'aside', title: 'Paper Scan settings',
+         text: 'Pick a date range, what counts as a biology journal, and the words to look for in abstracts.'},
+        {target: '#run', title: 'Run a scan',
+         text: 'Fetches the papers, their references and abstracts live, then shows charts and searchable tables on the right.'},
+        {target: '.masthead .tools a[href="sheets.html"]', title: 'Now open Field Sheets', pointer: true, next: 'Go to Field Sheets',
+         text: 'The statistics for both journals are in Field Sheets. Click it to continue the guide there.',
+         go: 'sheets.html'},
       ],
     },
     {
-      key: 'tour:sheets:v1',
+      key: 'tour:sheets:v2',
       match: () => document.getElementById('tabs'),
       steps: [
-        {target: null, title: 'Welcome to Field Sheets',
-         text: 'These tables trace who writes in two astrobiology journals and what they cite, field by field, and compare the two. This short guide shows how to read and use them.', before: openTab('README')},
-        {target: '.masthead .tools', title: 'Two tools',
-         text: 'Switch between Paper Scan (run your own citation scan) and Field Sheets (these tables).'},
-        {target: '.dl', title: 'Download the Excel file',
-         text: 'Every table on this page is also in one Excel workbook, with the same sheets.'},
-        {target: '#tabs', title: 'One tab per sheet',
-         text: 'Each tab is one sheet of the workbook; the number is its row count. Large sheets load when you first open them.'},
-        {target: '.workflow', title: 'How the tables are made', before: openTab('README'),
-         text: 'The README tab starts with the workflow: data sources on the left, steps A–D, and the tables each step produces. Click the diagram to enlarge it.'},
-        {target: '.decisions .head', title: 'Method decisions', before: openTab('README'),
-         text: 'Every choice behind the numbers is listed at the bottom of the README. Tick each one once you have checked it, and use "Copy as checklist" to share your ticks.'},
-        {target: '#q', title: 'Search a sheet', before: openTab('2 Astrobio authors'),
-         text: 'Type to filter the current sheet across all columns, for example an author\'s name or a journal.'},
-        {target: '#wrap thead', title: 'Sort and expand', before: openTab('2 Astrobio authors'),
-         text: 'Click a column header to sort (click again to reverse). Click a row to show long cells, like publication lists, in full.'},
-        {target: '#tabs', title: 'The representation index', before: openTab('5 Representation'),
-         text: 'Sheet 5 compares, field by field, the share of authors with the share of cited works: below 1 means a field is under-represented among authors relative to how much its work is cited.'},
-        {target: '[data-tour-start]', title: 'Replay this guide', before: openTab('README'),
+        {target: null, title: 'Field Sheets', before: openTab('README'),
+         text: () => `Field statistics for the International Journal of Astrobiology and Astrobiology (SAGE), papers published online ${period()}: ` +
+           `${rows('1 Astrobio papers')} papers, ${rows('2 Astrobio authors')} authors, ${rows('3 Cited papers')} cited works and ${rows('4 Cited authors')} cited authors. ` +
+           'The guide follows the page in four parts.'},
+        {target: '.workflow', title: '1 · The pipeline', before: openTab('README'),
+         text: 'The README tab opens with the workflow: data sources on the left, steps A–D, and the tables each step produces. Click the diagram to enlarge it.'},
+        {target: '.readme h2', title: '2 · Implementation details', before: openTab('README'),
+         text: 'Below the diagram, the README explains each choice: how journals and papers get a field, how authors are identified, and how the representation index is computed.'},
+        {target: '.decisions .head', title: '3 · Decisions to confirm', before: openTab('README'),
+         text: 'At the bottom of the README, every method choice is a tick box. Tick the ones you agree with; ticks stay in your browser only.'},
+        {target: '#dcopy', title: '3 · Share your ticks', before: openTab('README'),
+         text: 'Copy as checklist copies your ticks as a list you can paste into an email or a GitHub issue.'},
+        {target: '#tabs', title: '4 · The sheets', before: openTab('1 Astrobio papers'),
+         text: 'Each tab is one sheet of the workbook, and the number is its row count: papers, citations, authors and their publications, cited papers, cited authors, the representation index, and journals.'},
+        {target: '#q', title: '4 · Search', before: openTab('2 Astrobio authors'),
+         text: 'Type to filter the current sheet across all columns, for example an author or a journal.'},
+        {target: '#wrap thead', title: '4 · Sort and expand', before: openTab('2 Astrobio authors'),
+         text: 'Click a column header to sort, again to reverse. Click a row to show long cells in full.'},
+        {target: '#tabs', title: '4 · Representation index', before: openTab('5 Representation'),
+         text: 'Sheet 5 compares, field by field, the share of authors with the share of cited works; below 1 means a field is under-represented among authors.'},
+        {target: '.dl', title: '4 · Download everything', before: openTab('README'),
+         text: 'The red button downloads the full Excel workbook with every sheet.'},
+        {target: '[data-tour-start]', title: 'Replay this guide',
          text: 'Click Guide any time to see this walkthrough again.'},
       ],
     },
@@ -74,6 +75,11 @@
 .tour-card.again { animation: tour-step .3s ease; }
 @keyframes tour-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
 @keyframes tour-step { from { opacity: .2; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.tour-pointer { position: fixed; z-index: 10001; pointer-events: none; transition: top .35s ease, left .35s ease; }
+.tour-pointer svg { position: absolute; left: 0; top: 0; width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4)); animation: tour-tap 1.6s ease-in-out infinite; }
+.tour-pointer i { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid #ffffff; animation: tour-ripple 1.6s ease-out infinite; }
+@keyframes tour-tap { 0%, 100% { transform: translate(14px, 14px); } 40% { transform: translate(2px, 2px); } 50% { transform: translate(2px, 2px) scale(.88); } 60% { transform: translate(2px, 2px); } }
+@keyframes tour-ripple { 0%, 45% { transform: scale(.2); opacity: 0; } 50% { opacity: .95; } 100% { transform: scale(1.5); opacity: 0; } }
 .tour-card .tour-step { font-size: 12px; color: #6b6b75; margin-bottom: 2px; }
 .tour-card h3 { margin: 0 0 6px; font-size: 16px; }
 .tour-card p { margin: 0 0 12px; color: #34323f; }
@@ -91,12 +97,13 @@
   .tour-card .tour-dots i { background: #4a4a52; }
   .tour-card button { background: #26262b; color: #f1f1f3; border-color: #4a4a52; }
 }
-@media (prefers-reduced-motion: reduce) { .tour-hole, .tour-card { transition: none; animation: none; } }`;
+@media (prefers-reduced-motion: reduce) { .tour-hole, .tour-card, .tour-pointer, .tour-pointer svg, .tour-pointer i { transition: none; animation: none; } }`;
 
   const page = PAGES.find(p => p.match());
   if (!page) return;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const seen = () => { try { return localStorage.getItem(page.key); } catch { return '1'; } };
+  const CONTINUE = 'tour:continue';  // set when a guide hands over to the next page
   const markSeen = () => { try { localStorage.setItem(page.key, new Date().toISOString().slice(0, 10)); } catch {} };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -128,6 +135,19 @@
     let cx = Math.min(vw - cw - 16, Math.max(16, left + width / 2 - cw / 2));
     card.style.top = cy + 'px';
     card.style.left = cx + 'px';
+    nodes.pointer.style.top = r.top + r.height / 2 + 'px';
+    nodes.pointer.style.left = r.left + r.width / 2 + 'px';
+  }
+
+  // Next / Enter: a step with `go` hands the guide over to another page; the last step closes it.
+  function advance() {
+    const s = page.steps[i];
+    if (s.go) {
+      try { sessionStorage.setItem(CONTINUE, '1'); } catch {}
+      markSeen();
+      location.href = s.go;
+    } else if (i === page.steps.length - 1) end();
+    else show(i + 1);
   }
 
   async function show(n) {
@@ -141,16 +161,19 @@
     if (el) { el.scrollIntoView({block: 'center', behavior: 'instant'}); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }
     if (my !== token || !nodes) return;
     const last = i === page.steps.length - 1;
-    nodes.card.innerHTML = `<div class="tour-step">Step ${i + 1} of ${page.steps.length}</div><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>
+    const text = typeof s.text === 'function' ? s.text() : s.text;
+    const label = s.next || (last ? 'Done' : i ? 'Next' : 'Start');
+    nodes.card.innerHTML = `<div class="tour-step">Step ${i + 1} of ${page.steps.length}</div><h3>${esc(s.title)}</h3><p>${esc(text)}</p>
       <div class="tour-dots">${page.steps.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
-      <div class="tour-row">${last ? '<span style="margin-right:auto"></span>' : '<button class="tour-skip">Skip</button>'}${i ? '<button class="tour-back">Back</button>' : ''}<button class="tour-next">${last ? 'Done' : i ? 'Next' : 'Start'}</button></div>`;
+      <div class="tour-row">${last && !s.go ? '<span style="margin-right:auto"></span>' : '<button class="tour-skip">Skip</button>'}${i ? '<button class="tour-back">Back</button>' : ''}<button class="tour-next">${esc(label)}</button></div>`;
     nodes.card.classList.remove('again'); void nodes.card.offsetWidth; nodes.card.classList.add('again');
-    nodes.card.querySelector('.tour-next').onclick = () => (last ? end() : show(i + 1));
+    nodes.card.querySelector('.tour-next').onclick = () => advance();
     const skip = nodes.card.querySelector('.tour-skip');
     if (skip) skip.onclick = end;
     const back = nodes.card.querySelector('.tour-back');
     if (back) back.onclick = () => show(i - 1);
     nodes.target = el;
+    nodes.pointer.style.display = s.pointer && el ? 'block' : 'none';
     place(el);
     setTimeout(() => { if (my === token && nodes) place(el); }, 400);
     nodes.card.querySelector('.tour-next').focus({preventScroll: true});
@@ -159,7 +182,7 @@
   function onKey(e) {
     if (!nodes) return;
     if (e.key === 'Escape') end();
-    else if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); i < page.steps.length - 1 ? show(i + 1) : end(); }
+    else if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); advance(); }
     else if (e.key === 'ArrowLeft' && i > 0) show(i - 1);
   }
   const reflow = () => nodes && place(nodes.target);
@@ -172,8 +195,17 @@
     const block = document.createElement('div'); block.className = 'tour-block';
     const hole = document.createElement('div'); hole.className = 'tour-hole';
     const card = document.createElement('div'); card.className = 'tour-card'; card.setAttribute('role', 'dialog'); card.setAttribute('aria-live', 'polite');
-    document.body.append(block, hole, card);
-    nodes = {block, hole, card, target: null};
+    const pointer = document.createElement('div'); pointer.className = 'tour-pointer'; pointer.style.display = 'none';
+    pointer.innerHTML = '<i></i><svg viewBox="0 0 24 24"><path d="M4 2l15 11-6.5 1.2 3.7 7.3-2.6 1.3-3.7-7.3L4 20z" fill="#fff" stroke="#1b1b1f" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+    document.body.append(block, hole, card, pointer);
+    nodes = {block, hole, card, pointer, target: null};
+    // on a pointer step, a click on the spotlighted control does what Next does
+    block.addEventListener('click', e => {
+      const s = page.steps[i], el = nodes && nodes.target;
+      if (!s.pointer || !el) return;
+      const r = el.getBoundingClientRect();
+      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) advance();
+    });
     addEventListener('keydown', onKey); addEventListener('resize', reflow); addEventListener('scroll', reflow, true);
     show(0);
   }
@@ -183,10 +215,12 @@
     token++;
     markSeen();
     removeEventListener('keydown', onKey); removeEventListener('resize', reflow); removeEventListener('scroll', reflow, true);
-    nodes.block.remove(); nodes.hole.remove(); nodes.card.remove();
+    nodes.block.remove(); nodes.hole.remove(); nodes.card.remove(); nodes.pointer.remove();
     nodes = null;
   }
 
   document.querySelectorAll('[data-tour-start]').forEach(b => b.addEventListener('click', start));
-  if (!seen()) setTimeout(start, 700);
+  let handedOver = false;
+  try { handedOver = sessionStorage.getItem(CONTINUE) === '1'; sessionStorage.removeItem(CONTINUE); } catch {}
+  if (handedOver || !seen()) setTimeout(start, handedOver ? 400 : 700);
 })();
