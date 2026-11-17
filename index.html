@@ -295,6 +295,8 @@ footer { font-size: 12px; }
 .masthead .tools { display: flex; gap: 2px; flex: none; background: var(--page); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
 .masthead .tools a { padding: 3px 12px; border-radius: 999px; color: var(--muted); text-decoration: none; font-size: .95em; white-space: nowrap; }
 .masthead .tools a:hover { color: var(--ink); }
+.masthead .guide { flex: none; font: inherit; font-size: .9em; color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.masthead .guide:hover { color: var(--ink); }
 .masthead .tools a.on { background: var(--ink); color: var(--bg); font-weight: 600; }
 </style>
 </head>
@@ -311,6 +313,7 @@ footer { font-size: 12px; }
       <a href="#journals">Journals</a>
       <a href="#explore">Data</a>
     </div>
+    <button class="guide" type="button" data-tour-start>Guide</button>
   </nav>
 </header>
 
@@ -1146,5 +1149,6 @@ function openSnapshot(snap) {
 if (window.SNAPSHOT) openSnapshot(window.SNAPSHOT);
 else initControls({bio_fields_default: BIOLOGY_FIELDS_DEFAULT, bio_fields_all: ALL_LIFE_SCIENCE_FIELDS});
 </script>
+<script src="tour.js" defer></script>
 </body>
 </html>

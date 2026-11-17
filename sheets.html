@@ -101,13 +101,17 @@ tbody tr:hover td { background: var(--wash); }
 .tools a { padding: 3px 12px; border-radius: 999px; color: var(--ink-2); text-decoration: none; font-size: 13px; white-space: nowrap; }
 .tools a:hover { color: var(--ink); }
 .tools a.on { background: var(--ink); color: var(--raised); font-weight: 600; }
+.masthead .guide { margin-left: auto; font: inherit; font-size: 13px; color: var(--ink-2); background: none; border: 1px solid var(--axis); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.masthead .guide:hover { color: var(--ink); }
 @media (max-width: 640px) { .masthead nav { padding: 10px 16px; gap: 14px; } }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
 <div class="masthead"><nav>
   <a class="site" href="index.html">DeepAstroBio</a>
   <div class="tools"><a href="index.html">Paper Scan</a><a class="on" href="sheets.html" aria-current="page">Field Sheets</a></div>
+  <button class="guide" type="button" data-tour-start>Guide</button>
 </nav></div>
+<script src="tour.js" defer></script>
 <header>
   <div class="titlerow"><h1 id="title">Astrobiology journal field sheets</h1><a class="dl" href="data/astrobio_field_sheets_2025-11-01_2026-10-31.xlsx" download>Download Excel (.xlsx)</a></div>
   <p id="sub"></p>
